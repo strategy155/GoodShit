@@ -1,11 +1,5 @@
-from definitions import ROOT_DIR,NAME_OF_NEWSPAPER
+from definitions import ROOT_DIR,NAME_OF_NEWSPAPER,DEFAULT_ROOT,DEFAULT_PLAIN_TEXT,DEFAULT_MYSTEM_XML,DEFAULT_MYSTEM_PLAIN
 import utils
-
-
-DEFAULT_ROOT=utils.produce_path(ROOT_DIR,NAME_OF_NEWSPAPER)
-DEFAULT_PLAIN_TEXT=utils.produce_path(DEFAULT_ROOT,'plain')
-DEFAULT_MYSTEM_XML=utils.produce_path(DEFAULT_ROOT,'mystem-xml')
-DEFAULT_MYSTEM_PLAIN=utils.produce_path(DEFAULT_ROOT,'mystem-plain')
 
 
 def creating_directory_map():

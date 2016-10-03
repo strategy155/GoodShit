@@ -25,15 +25,29 @@ def make_soup_with_webpage(input_webpage, webpage_type):
 
 
 def get_list_of_tags_with_specified_atributes(soup, tag_name, spec_dict):
-    _all_spec_headers = soup.find_all(name=tag_name, attrs={spec_dict['name']: spec_dict['attribute']})
+    _all_spec_headers = soup.find_all(name=tag_name, attrs=spec_dict)
     return _all_spec_headers
 
 
-def download_file(url):
-    local_filename = url.split('/')[-1]
+def get_tags_with_special_attrs(webpage_url,webpage_type,tag_name, spec_dict):
+    _req_page = get_webpage(webpage_url)
+    _soup = make_soup_with_webpage(_req_page, webpage_type)
+    _tags=get_list_of_tags_with_specified_atributes(_soup,tag_name,spec_dict)
+    return _tags
+
+
+def download_file(url,path=''):
+    local_filename = produce_path(path, _pm_article_path_template_creation(url))
     r = requests.get(url, stream=True)
     with open(local_filename, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024):
             if chunk:
                 f.write(chunk)
     return local_filename
+
+
+def _pm_article_path_template_creation(path):
+    _new_path=path.split('/')[-2].replace("-"," ")
+    list = _new_path.split(' ')
+    list.pop(0)
+    return _new_path
