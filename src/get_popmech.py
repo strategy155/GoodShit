@@ -1,6 +1,7 @@
 import utils
 import urllib.parse
-from definitions import ROOT_DIR, WEBPAGE_TYPE, ROOT_URL, ARCHIVE_URL,DEFAULT_PLAIN_TEXT
+from definitions import ROOT_DIR, WEBPAGE_TYPE, ROOT_URL, ARCHIVE_URL,DEFAULT_PLAIN_TEXT, ARTICLE_TYPE, DEFAULT_ROOT, \
+    DEFAULT_MYSTEM_PLAIN,DEFAULT_MYSTEM_XML
 MAG_CLASS_DICT={"class": "box-reference-information"}
 ARTICLES_CLASS_DICT= {"class":"article-preview-title"}
 TAG_NAME = 'div'
@@ -13,8 +14,15 @@ def _extract_spec_refs_from_page(root_url,spec_dict):
 
 def _download_from_refs(list_of_refs,target_path):
     for _target_ref in list_of_refs:
-        utils.download_file(_target_ref,target_path)
+        utils.download_file(_target_ref, target_path, ARTICLE_TYPE)
     return None
+
+
+def creating_directory_map():
+    utils.create_directory_if_needed(DEFAULT_ROOT)
+    utils.create_directory_if_needed(DEFAULT_PLAIN_TEXT)
+    utils.create_directory_if_needed(DEFAULT_MYSTEM_XML)
+    utils.create_directory_if_needed(DEFAULT_MYSTEM_PLAIN)
 
 
 def _convert_popmech_tags_to_refs(list_of_tags):

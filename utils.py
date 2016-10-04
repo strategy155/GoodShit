@@ -1,6 +1,8 @@
 import os
 import requests
 import bs4
+from transliterate import translit
+from definitions import NAME_OF_FILETYPES
 
 
 def create_directory_if_needed(path):
@@ -36,18 +38,16 @@ def get_tags_with_special_attrs(webpage_url,webpage_type,tag_name, spec_dict):
     return _tags
 
 
-def download_file(url,path=''):
-    local_filename = produce_path(path, _pm_article_path_template_creation(url))
+def _choose_file_name_template(url,type):
+    _name_of_types=NAME_OF_FILETYPES
+    return _name_of_types[type](url)
+
+
+def download_file(url, path='', type_of_file='simple-file'):
+    local_filename = produce_path(path, _choose_file_name_template(url,type_of_file))
     r = requests.get(url, stream=True)
     with open(local_filename, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024):
             if chunk:
                 f.write(chunk)
     return local_filename
-
-
-def _pm_article_path_template_creation(path):
-    _new_path=path.split('/')[-2].replace("-"," ")
-    list = _new_path.split(' ')
-    list.pop(0)
-    return _new_path
