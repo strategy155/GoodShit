@@ -1,7 +1,6 @@
 import os
 import requests
 import bs4
-from transliterate import translit
 from definitions import NAME_OF_FILETYPES
 
 
